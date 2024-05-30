@@ -10,8 +10,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 
 class MainActivity : AppCompatActivity() {
-    lateinit var textName : TextView
-    lateinit var textEmail : TextView
+    lateinit var textName : EditText
+    lateinit var textEmail : EditText
     lateinit var btnDlg : Button
     lateinit var editName : EditText
     lateinit var editEmail : EditText
@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         title = "사용자 정보 입력"
 
-        textName = findViewById<TextView>(R.id.textName)
-        textEmail = findViewById<TextView>(R.id.textEmail)
+        textName = findViewById<EditText>(R.id.textName)
+        textEmail = findViewById<EditText>(R.id.textEmail)
         btnDlg = findViewById<Button>(R.id.btnDlg)
 
         btnDlg.setOnClickListener {
@@ -33,19 +33,21 @@ class MainActivity : AppCompatActivity() {
             var dialog = AlertDialog.Builder(this@MainActivity)
             dialog.setTitle("사용자 정보 입력")
             dialog.setView(dlgView)
+            editName = dlgView.findViewById<EditText>(R.id.editName)
+            editEmail = dlgView.findViewById<EditText>(R.id.editEmail)
+            editName.text = textName.text
+            editEmail.text = textEmail.text
             dialog.setIcon(R.drawable.images)
             dialog.setPositiveButton("확인"){dialogL, which ->
-                editName = dlgView.findViewById<EditText>(R.id.editName)
-                editEmail = dlgView.findViewById<EditText>(R.id.editEmail)
-                textName.text = editName.text.toString()
-                textEmail.text = editEmail.text.toString()
+                textName.text = editName.text
+                textEmail.text = editEmail.text
             }
             dialog.setNegativeButton("취소"){dialogL, which ->
                 toastView = View.inflate(this@MainActivity, R.layout.toast, null)
                 var toast = Toast(this@MainActivity)
                 toast.view = toastView
                 textToast = toastView.findViewById(R.id.textToast)
-                textToast.text = "canceld"
+                textToast.text = "cancel"
                 toast.show()
             }
             dialog.show()
